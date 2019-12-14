@@ -16,10 +16,10 @@ const buildControls =(props)=>{
 return(
 
 <div className="BuildControls">
-<p>price:<strong>{props.price.toFixed(2)}</strong></p>
+<p>price:<strong>{props.price.toFixed(2)} $</strong></p>
 {controls.map((ctrl)=> <BuildControl key={ctrl.label} label={ctrl.label} add={()=>props.ingredientsAdded(ctrl.type)} remove={()=>props.ingredientsRemoved(ctrl.type)} disabled={props.disabled[ctrl.type]}/>
 )}
-<button class="OrderButton">ORDER NOW</button>
+<button  onClick={props.ordered} disabled={!props.purchaseable} className="OrderButton">ORDER NOW</button>
 </div>
     
     )

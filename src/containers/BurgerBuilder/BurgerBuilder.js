@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import Aux from '../../hoc/Auxi';
 import Burger from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
+import  Model from '../../components/UI/Model/Model'
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 
 const INGRIDIAS_PRICE={
   Salad:1,
@@ -22,11 +24,28 @@ ingredients:{
         Tomato:0,
         Onion:0
     }
-    ,totalPrice:1
-    ,purchaseable:0
+    ,totalPrice:0
+    ,purchaseable:false
+    ,purchasing:false
+    
+}
+ 
+continueHundler=()=>{
+  alert('total price is:'+ this.state.totalPrice +'$' )
+  this.setState({purchasing:false})
+}
+
+purchaseHundler=()=>
+{
+  let purchasing=!this.state.purchasing
+  this.setState({purchasing : purchasing})
 }
 
 
+ updatepurchaseable =(ingredients)=>{
+let sumValues = Object.values(ingredients).reduce((a, b) => {return a + b},0);
+this.setState({purchaseable: sumValues!==0})
+ }
 
 addIngredientHundler =(type)=>
 {
@@ -41,6 +60,7 @@ addIngredientHundler =(type)=>
   const oldPrice=this.state.totalPrice
   const newPrice=oldPrice+priceAddition
   this.setState({totalPrice:newPrice,ingredients:updatedIngredients})
+  this.updatepurchaseable(updatedIngredients);
 
 }
 
@@ -58,7 +78,7 @@ removeIngredientHundler =(type)=>
   const oldPrice=this.state.totalPrice
   const newPrice=oldPrice===0?0:oldPrice-priceAddition
   this.setState({totalPrice:newPrice,ingredients:updatedIngredients})
-
+  this.updatepurchaseable(updatedIngredients);
 }
 
 
@@ -69,12 +89,20 @@ removeIngredientHundler =(type)=>
       for(let key in disabledInfo){
         disabledInfo[key]=disabledInfo[key]<=0
       }
-      console.log(disabledInfo)
   return (
     <Aux>
+      <Model show={this.state.purchasing}  hide={this.purchaseHundler}>
+        <OrderSummary hide={this.purchaseHundler} continue={this.continueHundler} ingredients={this.state.ingredients}/>
+      </Model>
         <Burger ingredients={this.state.ingredients}/>
-
-            <BuildControls price={this.state.totalPrice} ingredientsAdded={this.addIngredientHundler} ingredientsRemoved={this.removeIngredientHundler} disabled={disabledInfo}/>
+            <BuildControls 
+            price={this.state.totalPrice} 
+            ingredientsAdded={this.addIngredientHundler} 
+            ingredientsRemoved={this.removeIngredientHundler} 
+            disabled={disabledInfo}
+            purchaseable={this.state.purchaseable}
+            ordered={this.purchaseHundler}
+            />
 
     </Aux>
   );
