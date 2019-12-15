@@ -15,6 +15,7 @@ return (
 <ul>
 {ingrediantsList}
 </ul>
+<p>price: <strong>{props.price}$</strong></p>
   <p>continue to checkout?  </p>
 
   <Button btnType="Danger" clicked={props.hide}> CANCEL</Button>

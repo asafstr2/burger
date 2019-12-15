@@ -31,7 +31,7 @@ ingredients:{
 }
  
 continueHundler=()=>{
-  alert('total price is:'+ this.state.totalPrice +'$' )
+  alert('total price is:'+ this.state.totalPrice.toFixed(2) +'$' )
   this.setState({purchasing:false})
 }
 
@@ -92,7 +92,12 @@ removeIngredientHundler =(type)=>
   return (
     <Aux>
       <Model show={this.state.purchasing}  hide={this.purchaseHundler}>
-        <OrderSummary hide={this.purchaseHundler} continue={this.continueHundler} ingredients={this.state.ingredients}/>
+        <OrderSummary 
+        hide={this.purchaseHundler} 
+        continue={this.continueHundler} 
+        ingredients={this.state.ingredients} 
+        price={this.state.totalPrice.toFixed(2)} 
+        />
       </Model>
         <Burger ingredients={this.state.ingredients}/>
             <BuildControls 
