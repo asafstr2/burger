@@ -4,7 +4,7 @@ import burgerLogo from '../../assets/Images/burgerLogo.png'
 
 const logo= (props)=>
 (
-<div className="Logo">
+<div className="Logo" style={{height : props.height}}>
     <img  src={burgerLogo} alt="burgerlogo"/>
 </div>
 
