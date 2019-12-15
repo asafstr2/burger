@@ -3,22 +3,22 @@
     justify-content: space-between;
     align-items: center;
     margin: 5px 0;
+    
 }
 
 .BuildControl button {
     display: block;
     font: inherit;
-    padding: 5px;
-    margin: 0 5px;
-    width: 80px;
-    border: 1px solid #AA6817;
+    padding: 1px;
+    margin: 0 1px;
+    width: 25px;
     cursor: pointer;
     outline: none;
+    font-size: 1.8em;
+    
 }
 
 .BuildControl button:disabled {
-    background-color: #AC9980;
-    border: 1px solid #7E7365;
     color: #ccc;
     cursor: default;
 }
@@ -62,9 +62,9 @@
     border: 1px solid #966909;
     color: #966909;
     font-family: inherit;
-    font-size: 1.2em;
     padding: 15px 30px;
     box-shadow: 2px 2px 2px #966909;
+    border-radius: 7px;
 }
 
 .OrderButton:hover, .OrderButton:active {
@@ -73,7 +73,7 @@
     color: #966909;
 }
 
-.OrderButton:disabled {
+button.OrderButton:disabled {
     background-color: #C7C6C6;
     cursor: not-allowed;
     border: 1px solid #ccc;

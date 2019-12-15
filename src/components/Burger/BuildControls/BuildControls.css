@@ -2,13 +2,24 @@
 
 .BuildControls
 {
-    width: 38%;
-    background-color: #fbf0da;
     display: flex;
     flex-flow: column;
     align-items: center;
-    box-shadow: 0 2px 1px #ccc;
+    box-shadow: 3px 6px  #ccc;
     margin: auto;
     padding: 10px 0;
-    
+    border: 8px solid rgba(255, 255, 255, .3);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.9);
+    transition: box-shadow 0.3s ease;
+    border-radius: 10px;
+
 }
+
+
+
+.BuildControls button:disabled {
+    color: #ccc;
+    cursor: default;
+}
+
+

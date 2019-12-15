@@ -6,6 +6,9 @@ import DrawerToggle from './SideDrawer/DrawerToggle/DrawerToggle'
 const toolbar=(props)=>{
 console.log(props.show)
 
+var width = window.innerWidth
+|| document.documentElement.clientWidth
+|| document.body.clientWidth;
 
 let attachClasses=['Toolbar']
  if(props.open)
@@ -15,7 +18,7 @@ return(
 
     <header className={attachClasses}>
 
-<DrawerToggle clicked={props.toggle}>MENUE</DrawerToggle>
+<DrawerToggle clicked={props.toggle}>{width>=500?'MENUE':null}</DrawerToggle>
 
 
         <Logo height= "80%"  />

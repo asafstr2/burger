@@ -30,6 +30,21 @@ ingredients:{
     
 }
  
+zeroall=()=>{
+  let ingredients  = this.state.ingredients
+  for (let key in ingredients) {
+    if (ingredients.hasOwnProperty(key)) {
+        ingredients[key] = 0;
+    }}
+
+    this.setState({ingredients:ingredients, totalPrice:0 ,purchaseable:false,purchasing:false
+
+    })
+
+
+}
+
+
 continueHundler=()=>{
   alert('total price is:'+ this.state.totalPrice.toFixed(2) +'$' )
   this.setState({purchasing:false})
@@ -82,6 +97,7 @@ removeIngredientHundler =(type)=>
 }
 
 
+
     render(){
       const disabledInfo ={
         ...this.state.ingredients
@@ -107,6 +123,7 @@ removeIngredientHundler =(type)=>
             disabled={disabledInfo}
             purchaseable={this.state.purchaseable}
             ordered={this.purchaseHundler}
+            clear={this.zeroall}
             />
 
     </Aux>

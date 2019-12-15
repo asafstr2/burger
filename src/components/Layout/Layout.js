@@ -11,18 +11,11 @@ state={
 }
 
 
-    sideDrawerHundlertest=()=>{
 
-
-       let showSideDrawer=this.state.showSideDrawer
-this.setState({ showSideDrawer:!showSideDrawer})
-
-    }
 
 
     sideDrawerHundler=()=>{
-
-       
+    
  this.setState((prevState)=>{
  return { showSideDrawer:!this.state.showSideDrawer}
  });

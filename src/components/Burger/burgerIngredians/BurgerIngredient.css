@@ -5,6 +5,9 @@
     border-radius: 0 0 30px 30px;
     box-shadow: inset -15px 0 #c15711;
     margin: 2% auto;
+    transition: 0.45s 1.2s ease-in-out;
+    animation-duration: 0.45s;
+    animation-name: bounce;
 }
 
 .BreadTop {
@@ -87,6 +90,9 @@
     background: linear-gradient(#7f3608, #5e3112);
     margin: 0.2% auto;
     border-radius: 15px;
+    transition: 0.45s 1.2s ease-in-out;
+    animation-duration: 0.45s;
+    animation-name: bounce;
 }
 
 .Cheese {
@@ -95,6 +101,10 @@
     margin: 0.2% auto;
     background: linear-gradient(#f6e7b5, #FFB400);
     border-radius: 20px;
+    transition: 0.45s 1.2s ease-in-out;
+    animation-duration: 0.45s;
+    animation-name: bounce;
+
 }
 
 .Salad {
@@ -103,12 +113,20 @@
     margin: 0.2% auto;
     background: linear-gradient(#228c1d, #91ce50);
     border-radius: 10px;
+    transition: 0.45s 1.2s ease-in-out;
+    animation-duration: 0.45s;
+    animation-name: bounce;
+
 }
 .lettuce
 {
  align-self: center;
   width: 85%;
   height: 4%;
+  transition: 0.45s 1.2s ease-in-out;
+  animation-duration: 0.45s;
+  animation-name: bounce;
+
 }
 
 .Bacon {
@@ -119,12 +137,20 @@
     background-color: #fbd6a1;
     margin: 0.2% auto;
     border-radius: 5px;
+    transition: 0.45s 1.2s ease-in-out;
+    animation-duration: 0.45s;
+    animation-name: bounce;
+
 
 }
 .tomato-group {
     margin: 0.2% 2px;
     text-align:center;
     height:4%;
+    transition: 0.45s 1.2s ease-in-out;
+    animation-duration: 0.45s;
+    animation-name: bounce;
+
 
 }
 
@@ -141,6 +167,10 @@
   margin: 0.2% 2px;
   height:2%;
   text-align:center;
+  transition: 0.45s 1.2s ease-in-out;
+  animation-duration: 0.45s;
+  animation-name: bounce;
+
 }
 
 .onion {
@@ -155,6 +185,41 @@
 }
 
 
+@keyframes bounce {
+  0%, 100% {
+    transform: scale(1);
+ }
+  20% {
+    transform: scaleY(0.5);
+ }
+  35% {
+    transform: scaleY(1.1);
+ }
+  55% {
+    transform: scaleY(0.7);
+ }
+  80% {
+    transform: scaleY(1.05);
+ }
+}
 
+
+@keyframes openup {
+  0%, 100% {
+    transform: translateY(1);
+ }
+  20% {
+    transform: translateY(0.5);
+ }
+  35% {
+    transform: translateY(1.1);
+ }
+  55% {
+    transform: translateY(0.7);
+ }
+  80% {
+    transform: translateY(1.05);
+ }
+}
 
 
