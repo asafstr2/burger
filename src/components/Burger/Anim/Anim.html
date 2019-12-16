@@ -1,0 +1,123 @@
+
+
+
+
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>The HTML5 Herald</title>
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+
+  <link rel="stylesheet" href="Anim.css">
+
+</head>
+
+<body >
+   
+
+
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 205 155">
+          <defs>
+              <path id="boxBottom" class="burg-box burg-main" d="M9.64,72.67H194.36a5.17,5.17,0,0,1,5,6.54l-15.88,58.72a19.85,19.85,0,0,1-19.12,14.73H39.68a19.85,19.85,0,0,1-19.12-14.73L4.68,79.22A5.17,5.17,0,0,1,9.64,72.67Z"/>
+              <path id="boxTop" class="burg-box burg-main" d="M196.73,82H7.27a5.2,5.2,0,0,1-5.08-6.54L18.47,16.73A20.28,20.28,0,0,1,38.08,2H165.92a20.28,20.28,0,0,1,19.61,14.73l16.29,58.72A5.2,5.2,0,0,1,196.73,82Z"/>
+          </defs>
+      </svg>
+      
+      <div id="app">
+          <div class="wrapper" :class="{'burg-completed': complete}">
+              
+              <div class="container container-burg">
+                  <div class="burg">
+                      <div class="burg-bun-container">
+                          <svg class="burg-topping-img" viewBox="0 0 155 45">
+                          </svg>
+                      </div>
+              
+                      <div class="burg-bun-container">
+                          <svg class="burg-topping-img" viewBox="0 0 155 45">
+                              <use xlink:href="#bunBottom"/>
+                          </svg>
+                      </div>
+                  </div>
+                  <transition name="fade-up">
+                      <svg v-if="complete" id="svgBoxBottom" class="burg-box-img" viewBox="0 70 205 90">
+                          <use xlink:href="#boxBottom"/>
+                      </svg>
+                  </transition>
+                  <transition name="fade-down">
+                      <svg v-if="complete" id="svgBoxTop" class="burg-box-img" viewBox="0 0 205 90">
+                          <use xlink:href="#boxTop"/>
+                      </svg>
+                  </transition>
+                  <transition name="drop-down">
+                      <svg v-if="complete" id="svgPop" class="pop-img" viewBox="0 -100 115 325">
+                          <g id="pop">
+                              <path class="pop pop-straw" d="M89.55,9h-36a2,2,0,0,0-2,2V87a2,2,0,0,0,2,2h6a2,2,0,0,0,2-2V21a2,2,0,0,1,2-2h26a2,2,0,0,0,2-2V11A2,2,0,0,0,89.55,9Z"/>
+                              <path class="pop pop-cup" d="M96.85,222.39H16.44a5.13,5.13,0,0,1-5.12-4.79L2,57.86a5.13,5.13,0,0,1,5.12-5.47h99a5.13,5.13,0,0,1,5.12,5.47L102,217.6A5.13,5.13,0,0,1,96.85,222.39Z"/>
+                          </g>
+                      </svg>
+                  </transition>
+                  <transition name="drop-down">
+                      <svg v-if="complete" id="svgFries" class="fries-img" viewBox="0 -100 117 250">
+                          <g id="fries">
+                              <g>
+                                  <rect id="fry1" class="fries fries-fry" x="50.49" y="9" width="15" height="45" rx="2" ry="2"/>
+                                  <rect id="fry2" class="fries fries-fry" x="65.49" y="12.68" width="15" height="45" rx="2" ry="2"/>
+                                  <rect id="fry3" class="fries fries-fry" x="12.28" y="26.44" width="15" height="45" rx="2" ry="2"/>
+                                  <rect id="fry4" class="fries fries-fry" x="25.32" y="20.65" width="15" height="45" rx="2" ry="2"/>
+                                  <rect id="fry5" class="fries fries-fry" x="40.83" y="26.44" width="15" height="45" rx="2" ry="2"/>
+                                  <rect id="fry6" class="fries fries-fry" x="54.99" y="31.5" width="15" height="45" rx="2" ry="2"/>
+                                  <rect id="fry7" class="fries fries-fry" x="74.29" y="26.44" width="15" height="45" rx="2" ry="2"/>
+                                  <rect id="fry8" class="fries fries-fry" x="89.29" y="20.65" width="15" height="45" rx="2" ry="2"/>
+                              </g>
+                              <path class="fries fries-container" d="M103.71,147H11.94A10,10,0,0,1,2,137.92L3.32,52.45a5,5,0,0,1,5-5.45h99.06a5,5,0,0,1,5,5.45l1.32,85.47A10,10,0,0,1,103.71,147Z"/>
+                          </g>
+                      </svg>
+                  </transition>
+              </div>
+          </div>
+          <transition name="fade-squish">
+              <button id='needtoclick' v-if="!complete" @click="completeOrder" style="display: none;">Order!</button>
+          </transition>
+          
+          <transition name="fade">
+              <button  v-if="complete" style="display: none;" @click="complete = false">Go back</button>
+          </transition>
+      </div>
+    
+
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+
+  <script src="Anim.vue"></script>
+  <script>
+    function myFunction() {
+      document.getElementById("needtoclick").click();
+    }
+    myFunction()
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

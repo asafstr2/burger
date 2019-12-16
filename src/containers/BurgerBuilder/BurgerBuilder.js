@@ -4,6 +4,7 @@ import Burger from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 import  Model from '../../components/UI/Model/Model'
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
+import Anim from '../../components/Burger/Anim/Anim'
 
 const INGRIDIAS_PRICE={
   Salad:1,
@@ -27,6 +28,7 @@ ingredients:{
     ,totalPrice:0
     ,purchaseable:false
     ,purchasing:false
+    ,anim:0
     
 }
  
@@ -46,14 +48,14 @@ zeroall=()=>{
 
 
 continueHundler=()=>{
-  alert('total price is:'+ this.state.totalPrice.toFixed(2) +'$' )
-  this.setState({purchasing:false})
+  //alert('total price is:'+ this.state.totalPrice.toFixed(2) +'$' )
+  this.setState({ purchasing:!this.state.purchasing,anim:1})
 }
 
 purchaseHundler=()=>
 {
   let purchasing=!this.state.purchasing
-  this.setState({purchasing : purchasing})
+  this.setState({purchasing : purchasing,anim:0})
 }
 
 
@@ -115,6 +117,14 @@ removeIngredientHundler =(type)=>
         price={this.state.totalPrice.toFixed(2)} 
         />
       </Model>
+
+      <Model show={this.state.anim===1}  hide={this.purchaseHundler}>
+      <Anim 
+       
+        />
+      </Model>
+
+
         <Burger ingredients={this.state.ingredients}/>
             <BuildControls 
             price={this.state.totalPrice} 
