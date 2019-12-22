@@ -119,9 +119,7 @@ removeIngredientHundler =(type)=>
       </Model>
 
       <Model show={this.state.anim===1}  hide={this.purchaseHundler}>
-      <Anim 
-       
-        />
+      <Anim />
       </Model>
 
 
