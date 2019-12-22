@@ -1,21 +1,30 @@
-import React from 'react';
+import React, {Component} from 'react';
 import './Model.css'
 import Aux from '../../../hoc/Auxi'
 import BackDrop from '../Backdrop/Backdrop'
-const model = (props)=>
-(
 
-    <Aux>
-        <BackDrop show={props.show} hide={props.hide}/>
+
+
+class model extends Component{
+    shouldComponentUpdate(nextProps, nextState){
+        return nextProps.show !== this.props.show
+   
+       }
+
+    render(){
+    return(   <Aux>
+        <BackDrop show={this.props.show} hide={this.props.hide}/>
     <div className="Modal"
     style={{
-        transform:props.show?'translateY(0)':'translateY(-100vh)',
-        opacity: props.show? '1':'0'
+        transform:this.props.show?'translateY(0)':'translateY(-100vh)',
+        opacity: this.props.show? '1':'0'
     }}
     >
-   { props.children}
+   { this.props.children}
    </div>
-   </Aux>
-);
+   </Aux>)
+   }
+}
+
 
 export default model;
