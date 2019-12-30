@@ -4,8 +4,10 @@ import Burger from '../../components/Burger/Burger'
 import BuildControls from '../../components/Burger/BuildControls/BuildControls'
 import  Model from '../../components/UI/Model/Model'
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
-import Anim from '../../components/Burger/Anim/Anim'
-
+// import Anim from '../../components/Burger/Anim/Anim'
+import withErrorHundler from '../../hoc/withErrorHundler/withErrorHundler'
+import axios from '../../axios-order'
+import Spinner from '../../components/UI/Spinner/Spinner';
 const INGRIDIAS_PRICE={
   Salad:1,
   Beacon:0.5,
@@ -17,21 +19,26 @@ const INGRIDIAS_PRICE={
 class BurgerBuilder extends Component {
  
 state={
-ingredients:{
-        Salad:0,
-        Beacon:0,
-        Cheese:0,
-        Meat:0,
-        Tomato:0,
-        Onion:0
-    }
+ingredients:null
     ,totalPrice:0
     ,purchaseable:false
     ,purchasing:false
-    ,anim:0
+    ,anim:0,
+    loading:false,
+    lastId:null
     
 }
  
+componentDidMount(){
+  let url='https://react-my-burger-29668.firebaseio.com/ingredients'
+  if(this.state.lastId)
+  url='https://react-my-burger-29668.firebaseio.com/order/'+this.state.lastId
+  axios.get(url+'.json')
+  .then(response=>{console.log(response.data.ingredients)
+    this.setState({ingredients:response.data.ingredients?response.data.ingredients:response.data} 
+    )
+  })
+}
 zeroall=()=>{
   let ingredients  = this.state.ingredients
   for (let key in ingredients) {
@@ -39,7 +46,7 @@ zeroall=()=>{
         ingredients[key] = 0;
     }}
 
-    this.setState({ingredients:ingredients, totalPrice:0 ,purchaseable:false,purchasing:false
+    this.setState({ingredients:ingredients, totalPrice:0 ,purchaseable:false,purchasing:false ,loading:false
 
     })
 
@@ -48,14 +55,38 @@ zeroall=()=>{
 
 
 continueHundler=()=>{
+  this.setState({loading:true})
+ const order={
+   ingredients:this.state.ingredients,
+    price:this.state.totalPrice.toFixed(2),
+customer:{
+  name:'asaf strilitz',
+  address:{
+      street:'whatever',
+      zipode:'12345',
+      country:'israel'
+
+  },
+  email:'asafstr2@gmail.com'
+},
+deliveryMethod:'fast'
+ }
+ 
+  axios.post('/order.json',order)
+  .then( response=>{this.setState({loading:false,purchasing:false,lastId:response.data.name})
+  console.log(response.data.name)} )
+    .catch(error=>  this.setState({loading:false,purchasing:false}))
+    .finally(response=>{ this.zeroall() })
+
+
   //alert('total price is:'+ this.state.totalPrice.toFixed(2) +'$' )
-  this.setState({ purchasing:!this.state.purchasing,anim:1})
+  // this.setState({ purchasing:true,anim:1})
 }
 
-purchaseHundler=()=>
+purchaseHundler=(val)=>
 {
-  let purchasing=!this.state.purchasing
-  this.setState({purchasing : purchasing,anim:0})
+  this.setState({purchasing : val,anim:0})
+  
 }
 
 
@@ -101,41 +132,65 @@ removeIngredientHundler =(type)=>
 
 
     render(){
+
+
+
+    
       const disabledInfo ={
         ...this.state.ingredients
       }
       for(let key in disabledInfo){
         disabledInfo[key]=disabledInfo[key]<=0
       }
+
+
+let orderSummary=null;
+let burger=<Spinner/>
+if(this.state.ingredients){
+  console.log(this.state.ingredients);
+  
+burger=(
+<Aux>
+<Burger ingredients={this.state.ingredients}/>
+<BuildControls 
+price={this.state.totalPrice} 
+ingredientsAdded={this.addIngredientHundler} 
+ingredientsRemoved={this.removeIngredientHundler} 
+disabled={disabledInfo}
+purchaseable={this.state.purchaseable}
+ordered={()=>this.purchaseHundler(true)}
+clear={this.zeroall}
+/>
+</Aux>
+)
+orderSummary=   <OrderSummary 
+hide={()=>this.purchaseHundler(false)}
+continue={this.continueHundler} 
+ingredients={this.state.ingredients} 
+price={this.state.totalPrice.toFixed(2)} 
+/>
+}
+
+if (this.state.loading){
+  orderSummary= <Spinner/>
+  
+  }
+
   return (
     <Aux>
-      <Model show={this.state.purchasing}  hide={this.purchaseHundler}>
-        <OrderSummary 
-        hide={this.purchaseHundler} 
-        continue={this.continueHundler} 
-        ingredients={this.state.ingredients} 
-        price={this.state.totalPrice.toFixed(2)} 
-        />
+      <Model show={this.state.purchasing}  hide={()=>this.purchaseHundler(false)}>
+     {orderSummary}
       </Model>
-
-      <Model show={this.state.anim===1}  hide={this.purchaseHundler}>
+      {burger}
+      {/* <Model show={this.state.anim===1}  hide={this.purchaseHundler}>
       <Anim />
-      </Model>
+      </Model> */}
 
 
-        <Burger ingredients={this.state.ingredients}/>
-            <BuildControls 
-            price={this.state.totalPrice} 
-            ingredientsAdded={this.addIngredientHundler} 
-            ingredientsRemoved={this.removeIngredientHundler} 
-            disabled={disabledInfo}
-            purchaseable={this.state.purchaseable}
-            ordered={this.purchaseHundler}
-            clear={this.zeroall}
-            />
+    
 
     </Aux>
   );
 }
 }
-export default BurgerBuilder;
+export default withErrorHundler(BurgerBuilder,axios);
